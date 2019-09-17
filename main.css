@@ -38,7 +38,7 @@ button:focus {
   transition: all 0.4s ease 0s;
 }
 
-.box {
+.container {
   padding: 40px 60px;
 }
 
@@ -83,7 +83,53 @@ header {
   text-decoration: none;
   text-transform: uppercase;
 }
-
+.menu__item a:hover,
 .menu__item a:active {
   color: aquamarine;
+}
+
+.message{
+  margin-top: 30px;
+}
+
+/************** Board **************/
+
+.board{
+  display: flex;
+  justify-content: center;
+}
+
+#clients {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+@media (min-width: 750px) {
+  #clients {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  #clients {
+    width: 60%;
+  }
+}
+
+#clients td, #clients th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#clients tr:nth-child(even){background-color: #f2f2f2;}
+
+#clients tr:hover {background-color: #ddd;}
+
+#clients th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: cornflowerblue;
+  color: white;
 }

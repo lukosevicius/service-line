@@ -15,21 +15,21 @@ function loadJSONfromFile(callback) {
 function loadJSON() {
 
   loadJSONfromFile(function(response) {
-    let clients = JSON.parse(response);
+    let clientsJSON = JSON.parse(response);
 
-    loadJSONtoStorage(clients);
+    loadJSONtoStorage(clientsJSON);
   });
 }
 
 
-function loadJSONtoStorage(clients){
+function loadJSONtoStorage(clientsJSON){
 
-  const keys = Object.keys(clients)
+  const clients = Object.keys(clientsJSON)
 
-  for (const key of keys) {
-    console.log(clients[key]);
-    
-    window.localStorage.setItem(key, clients[key]);
+  for (const client of clients) {
+    window.localStorage.setItem(client, clientsJSON[client]);
   }
+
+  document.querySelector('.message').innerHTML = "Pavyzdiniai klientai sukelti į LocalStorage atmintį"
   
 }
