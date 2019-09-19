@@ -1,3 +1,5 @@
+loadClientsFromStorage();
+
 function loadClientsFromStorage() {
   const clientsObj = { ...localStorage };
   const sortedClients = sortClientsObject(clientsObj);
@@ -5,6 +7,9 @@ function loadClientsFromStorage() {
 
   for (const client of clients) {
     const specialist = sortedClients[client];
+
+    // console.log(specialist);
+    
 
     addClientToBoard(client, specialist);
   }
@@ -28,8 +33,6 @@ function sortClientsObject(clientsObj) {
      
   });   
 
-  
-
   return sortedClientsObj;
 }
 
@@ -44,4 +47,4 @@ function addClientToBoard(client, specialist) {
   document.querySelector("#clients").appendChild(tr);
 }
 
-loadClientsFromStorage();
+
