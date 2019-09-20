@@ -1,37 +1,37 @@
-loadClientsFromStorage();
+loadBoard();
 
-function loadClientsFromStorage() {
-  const clientsObj = { ...localStorage };
-  const sortedClients = sortClientsObject(clientsObj);
-  const clients = Object.keys(sortedClients);
+function loadBoard() {
+  const sortedClientsObj = getClientsSortedBySpecialist();
+  const sortedClients = Object.keys(sortedClientsObj);
 
-  for (const client of clients) {
-    const specialist = sortedClients[client];
-
-    // console.log(specialist);
-    
+  for (const client of sortedClients) {
+    const specialist = sortedClientsObj[client];
 
     addClientToBoard(client, specialist);
   }
 }
 
-function sortClientsObject(clientsObj) {
+function getClientsSortedBySpecialist() {
+  const clientsObj = { ...localStorage };
+
   var sortable = [];
 
+  //Turn client object to array
   for (var client in clientsObj) {
-    sortable.push([client, clientsObj[client]]);
+    const specialist = JSON.parse(clientsObj[client])["specialist"];
+    sortable.push([client, specialist]);
   }
 
+  //Sort array, by second value (which is specialist number)
   sortable.sort(function(a, b) {
     return a[1] - b[1];
   });
 
+  //Remake the object from sorted array
   var sortedClientsObj = {};
   sortable.forEach(function(item) {
-
-    sortedClientsObj[item[0]+' '] = item[1];
-     
-  });   
+    sortedClientsObj[item[0] + " "] = item[1];
+  });
 
   return sortedClientsObj;
 }
@@ -46,5 +46,3 @@ function addClientToBoard(client, specialist) {
 
   document.querySelector("#clients").appendChild(tr);
 }
-
-

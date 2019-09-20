@@ -7,10 +7,7 @@ function loadSpecialistpage() {
 
 function addFilter() {
   document.querySelector(".specialists").innerHTML = "";
-
-  const specialists = Object.values({ ...localStorage });
-  let uniqueSpecialists = Array.from(new Set(specialists));
-  uniqueSpecialists.sort((a, b) => a - b);
+  const uniqueSpecialists = getUniqueSpecialists();
 
   if (uniqueSpecialists.length !== 0) {
     //Create 'Select' element, with options for each specialist
@@ -32,49 +29,65 @@ function addFilter() {
   }
 }
 
+function getUniqueSpecialists() {
+  const clientsData = Object.values({ ...localStorage });
+
+  allSpecialistArray = clientsData.map(el => {
+    return JSON.parse(el).specialist;
+  });
+
+  let uniqueSpecialists = Array.from(new Set(allSpecialistArray));
+  uniqueSpecialists.sort((a, b) => a - b);
+
+  return uniqueSpecialists;
+}
+
 function addClientsForCurrentSpecialist() {
-  //First check if there are any clients assigned to specialists
+  //First check if there are any specialist assigned
   if (document.querySelector("select.choose-specialist")) {
-    let currentSpecialist = document.querySelector("select.choose-specialist")
+    //Check which specialist is currently selected and display its clients
+    let selectedSpecialist = document.querySelector("select.choose-specialist")
       .value;
-    createClientsTable(currentSpecialist);
+    createClientsTable(selectedSpecialist);
 
     //Rerender clients waiting-list when specialist is changed
     document
       .querySelector("select.choose-specialist")
       .addEventListener("change", function() {
-        currentSpecialist = document.querySelector("select.choose-specialist")
+        selectedSpecialist = document.querySelector("select.choose-specialist")
           .value;
-        createClientsTable(currentSpecialist);
+        createClientsTable(selectedSpecialist);
       });
   } else {
     document.querySelector("#clients").innerHTML = "";
   }
 }
 
-function createClientsTable(currentSpecialist) {
+function createClientsTable(selectedSpecialist) {
   document.querySelector("#clients").innerHTML = "";
   addBoardHeader("Laukiantys klientai", "Aptarnauti");
 
   const clientsObj = { ...localStorage };
   const clients = Object.keys(clientsObj);
-  let firstClient = true;
+  let isFirstClient = true;
 
   clients.forEach(client => {
-    if (clientsObj[client] === currentSpecialist) {
-      addClientToBoard(client, currentSpecialist, firstClient);
-      firstClient = false;
+    const clientsSpecialist = JSON.parse(clientsObj[client]).specialist;
+
+    if (clientsSpecialist == selectedSpecialist) {
+      addClientToBoard(client, selectedSpecialist, isFirstClient);
+      isFirstClient = false;
     }
   });
 }
 
-function addClientToBoard(client, specialist, firstClient) {
+function addClientToBoard(client, specialist, isFirstClient) {
   const tr = document.createElement("tr");
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   tr.appendChild(td1).append(client);
 
-  if (firstClient) {
+  if (isFirstClient) {
     const button = document.createElement("button");
     button.append("Aptarnauti");
     button.setAttribute("data-client", client);
@@ -88,7 +101,6 @@ function addClientToBoard(client, specialist, firstClient) {
 
     td2.appendChild(button);
   }
-
   tr.appendChild(td2);
 
   document.querySelector("#clients").appendChild(tr);

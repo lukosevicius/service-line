@@ -1,11 +1,38 @@
 {
-    "222": "1",
-    "101": "1",
-    "102": "2",
-    "133": "3",
-    "128": "3",
-    "108": "3",
-    "105": "3",
-    "199": "1",
-    "106": "2"
+    "1": {
+        "specialist": 1,
+        "serviced": false
+    },
+    "2": {
+        "specialist": 1,
+        "serviced": false
+    },
+    "3": {
+        "specialist": 2,
+        "serviced": false
+    },
+    "4": {
+        "specialist": 2,
+        "serviced": false
+    },
+    "5": {
+        "specialist": 3,
+        "serviced": false
+    },
+    "6": {
+        "specialist": 1,
+        "serviced": false
+    },
+    "7": {
+        "specialist": 3,
+        "serviced": false
+    },
+    "8": {
+        "specialist": 1,
+        "serviced": false
+    },
+    "9": {
+        "specialist": 2,
+        "serviced": false
+    }
 }
