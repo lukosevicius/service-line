@@ -7,14 +7,14 @@ function loadSpecialistpage() {
 
 function addFilter() {
   document.querySelector(".specialists").innerHTML = "";
-  const uniqueSpecialists = getUniqueSpecialists();
+  const specialists = getUniqueSpecialists();
 
-  if (uniqueSpecialists.length !== 0) {
+  if (specialists.length !== 0) {
     //Create 'Select' element, with options for each specialist
     let select = document.createElement("select");
     select.classList.add("choose-specialist");
 
-    uniqueSpecialists.forEach(specialist => {
+    specialists.forEach(specialist => {
       let option = document.createElement("option");
       option.value = specialist;
       option.append(specialist + " specialistas");
@@ -25,9 +25,37 @@ function addFilter() {
   } else {
     document
       .querySelector(".specialists")
-      .append("Šiuo metu nėra eilėjė laukiančių klientų");
+      .append("Šiuo metu nėra eilėje laukiančių klientų");
   }
 }
+
+// function getSpecialistsThatHaveClients() {
+//   const clientsData = Object.values({ ...localStorage });
+
+//   //Remove clients that were served
+//   allSpecialistArray = clientsData.filter(client => {
+//     client = JSON.parse(client);
+
+//     if (!client.serviced) {
+//       return client;
+//     }
+//   });
+
+
+//   //Get only specialists numbers
+//   allSpecialistArray = clientsData.map(client => {
+//     client = JSON.parse(client);
+
+//       return client.specialist;
+//   });
+  
+
+//   let uniqueSpecialists = Array.from(new Set(allSpecialistArray));
+//   uniqueSpecialists.sort((a, b) => a - b);
+
+
+//   return uniqueSpecialists;
+// }
 
 function getUniqueSpecialists() {
   const clientsData = Object.values({ ...localStorage });
@@ -69,14 +97,19 @@ function createClientsTable(selectedSpecialist) {
 
   const clientsObj = { ...localStorage };
   const clients = Object.keys(clientsObj);
+
   let isFirstClient = true;
 
   clients.forEach(client => {
-    const clientsSpecialist = JSON.parse(clientsObj[client]).specialist;
+    const isClientServiced = JSON.parse(clientsObj[client]).serviced;
 
-    if (clientsSpecialist == selectedSpecialist) {
-      addClientToBoard(client, selectedSpecialist, isFirstClient);
-      isFirstClient = false;
+    if (!isClientServiced) {
+      const clientsSpecialist = JSON.parse(clientsObj[client]).specialist;
+
+      if (clientsSpecialist == selectedSpecialist) {
+        addClientToBoard(client, selectedSpecialist, isFirstClient);
+        isFirstClient = false;
+      }
     }
   });
 }
@@ -88,22 +121,37 @@ function addClientToBoard(client, specialist, isFirstClient) {
   tr.appendChild(td1).append(client);
 
   if (isFirstClient) {
-    const button = document.createElement("button");
-    button.append("Aptarnauti");
-    button.setAttribute("data-client", client);
-    button.classList.add("btn");
-    button.classList.add("delete-button");
-
-    button.addEventListener("click", function() {
-      window.localStorage.removeItem(this.getAttribute("data-client"));
-      loadSpecialistpage();
-    });
-
+    const button = createServiceClientButton(client);
     td2.appendChild(button);
   }
   tr.appendChild(td2);
 
   document.querySelector("#clients").appendChild(tr);
+}
+
+function createServiceClientButton(client) {
+  const button = document.createElement("button");
+
+  button.append("Aptarnauti");
+  button.setAttribute("data-client", client);
+  button.classList.add("btn");
+  button.classList.add("delete-button");
+
+  button.addEventListener("click", function() {
+    const client = this.getAttribute("data-client");
+    serviceClient(client);
+    addClientsForCurrentSpecialist();
+  });
+
+  return button;
+}
+
+function serviceClient(clientID) {
+  let clientData = JSON.parse(window.localStorage.getItem(clientID));
+  clientData.serviced = true;
+
+  clientData = JSON.stringify(clientData);
+  window.localStorage.setItem(clientID, clientData);
 }
 
 function addBoardHeader(client, specialist) {

@@ -1,7 +1,7 @@
 loadBoard();
 
 function loadBoard() {
-  const sortedClientsObj = getClientsSortedBySpecialist();
+  const sortedClientsObj = getUnservicedClients();
   const sortedClients = Object.keys(sortedClientsObj);
 
   for (const client of sortedClients) {
@@ -11,15 +11,17 @@ function loadBoard() {
   }
 }
 
-function getClientsSortedBySpecialist() {
+function getUnservicedClients() {
   const clientsObj = { ...localStorage };
 
   var sortable = [];
 
   //Turn client object to array
   for (var client in clientsObj) {
-    const specialist = JSON.parse(clientsObj[client])["specialist"];
-    sortable.push([client, specialist]);
+    const clientObj = JSON.parse(clientsObj[client]);
+    if(!clientObj.serviced){
+      sortable.push([client, clientObj.specialist]);
+    }
   }
 
   //Sort array, by second value (which is specialist number)
