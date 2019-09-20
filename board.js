@@ -4,10 +4,20 @@ function loadBoard() {
   const sortedClientsObj = getUnservicedClients();
   const sortedClients = Object.keys(sortedClientsObj);
 
+  let isFirst = false;
+  let currentSpecialist = 0;
+
   for (const client of sortedClients) {
     const specialist = sortedClientsObj[client];
+     console.log(currentSpecialist);
+    
+    if(currentSpecialist != specialist){
+      isFirst = true;
+      currentSpecialist = specialist;
+    }
 
-    addClientToBoard(client, specialist);
+    addClientToBoard(client, specialist, isFirst);
+    isFirst = false;
   }
 }
 
@@ -38,8 +48,12 @@ function getUnservicedClients() {
   return sortedClientsObj;
 }
 
-function addClientToBoard(client, specialist) {
+function addClientToBoard(client, specialist, isFirst) {
   const tr = document.createElement("tr");
+  if(isFirst){
+    tr.classList.add('active-client')
+  }
+
   const td1 = document.createElement("td");
   tr.appendChild(td1).append(client);
 

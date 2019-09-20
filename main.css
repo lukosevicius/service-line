@@ -162,3 +162,7 @@ select.choose-specialist{
   background-color: cornflowerblue;
   color: white;
 }
+
+.active-client{
+  background-color: Khaki!important;
+}
