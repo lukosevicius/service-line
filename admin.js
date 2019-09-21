@@ -32,7 +32,8 @@ function getJSONfromFile(callback) {
 function loadClientsToStorage(clientsObj) {
   const clients = Object.keys(clientsObj);
   for (const client of clients) {
-    window.localStorage.setItem(client, JSON.stringify(clientsObj[client]));
+    const specialistID = JSON.stringify(clientsObj[client].specialist);
+    saveClient(client, specialistID);
   }
 
   document.querySelector(".message").innerHTML =
@@ -44,24 +45,63 @@ function addNewClient() {
   const specialistID = Math.floor(Math.random() * 3) + 1;
   const clientID = createClientID();
 
+  saveClient(clientID, specialistID);
+}
+
+function createClientID() {
+  //Make new client ID, by taking currently biggest number from received array adding 1 to it
+  const allClients = Object.keys({ ...localStorage });
+
+  if (allClients.length === 0) {
+    return 1;
+  } else {
+    return Math.max(...allClients) + 1;
+  }
+}
+
+function saveClient(clientID, specialistID) {
+  //Start appoinment immediately if this is specialist's first client
+  let appointment = null;
+  if (!hasActiveClients(specialistID)) {
+    appointment = new Date();
+  }
+
   const clientData = JSON.stringify({
     specialist: specialistID,
-    serviced: false
+    serviced: false,
+    created: new Date(),
+    startedAppointment: appointment,
+    endedAppointment: null
   });
 
   //Add new client to Local storage
   window.localStorage.setItem(clientID, clientData);
 }
 
-function createClientID() {
-  //Make new client ID, by taking currently biggest number from received array adding 1 to it
-  const allClients = Object.keys({ ...localStorage })
+function hasActiveClients(wantedSpecialistID) {
+  const allClientsObj = { ...localStorage };
+  const allClientsIDs = Object.keys(allClientsObj);
 
-  if (allClients.length === 0) {
-    return 1;
+  const pickedClients = [];
+
+  allClientsIDs.forEach(client => {
+    const clientsData = JSON.parse(allClientsObj[client]);
+
+    if (
+      clientsData["specialist"] == wantedSpecialistID &&
+      !clientsData["serviced"]
+    ) {
+      pickedClients.push(client);
+    }
+  });
+
+  if (pickedClients.length > 0) {
+    return true;
   } else {
-    return (Math.max(...allClients) + 1);
+    return false;
   }
+
+  // return pickedClients;
 }
 
 // function getClientsForSpecialist(wantedSpecialistID) {

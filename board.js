@@ -9,12 +9,12 @@ function loadBoard() {
 
   for (const client of sortedClients) {
     const specialist = sortedClientsObj[client];
-     console.log(currentSpecialist);
-    
-    if(currentSpecialist != specialist){
+
+    if (currentSpecialist != specialist) {
       isFirst = true;
       currentSpecialist = specialist;
     }
+    // console.log(window.localStorage.getItem(1));
 
     addClientToBoard(client, specialist, isFirst);
     isFirst = false;
@@ -29,7 +29,7 @@ function getUnservicedClients() {
   //Turn client object to array
   for (var client in clientsObj) {
     const clientObj = JSON.parse(clientsObj[client]);
-    if(!clientObj.serviced){
+    if (!clientObj.serviced) {
       sortable.push([client, clientObj.specialist]);
     }
   }
@@ -50,8 +50,8 @@ function getUnservicedClients() {
 
 function addClientToBoard(client, specialist, isFirst) {
   const tr = document.createElement("tr");
-  if(isFirst){
-    tr.classList.add('active-client')
+  if (isFirst) {
+    tr.classList.add("active-client");
   }
 
   const td1 = document.createElement("td");
@@ -62,3 +62,4 @@ function addClientToBoard(client, specialist, isFirst) {
 
   document.querySelector("#clients").appendChild(tr);
 }
+

@@ -121,7 +121,8 @@ function addClientToBoard(client, specialist, isFirstClient) {
   tr.appendChild(td1).append(client);
 
   if (isFirstClient) {
-    const button = createServiceClientButton(client);
+    startAppointment(client);
+    const button = createHandleClientButton(client);
     td2.appendChild(button);
   }
   tr.appendChild(td2);
@@ -129,7 +130,7 @@ function addClientToBoard(client, specialist, isFirstClient) {
   document.querySelector("#clients").appendChild(tr);
 }
 
-function createServiceClientButton(client) {
+function createHandleClientButton(client) {
   const button = document.createElement("button");
 
   button.append("Aptarnauti");
@@ -139,16 +140,17 @@ function createServiceClientButton(client) {
 
   button.addEventListener("click", function() {
     const client = this.getAttribute("data-client");
-    serviceClient(client);
+    handleClient(client);
     addClientsForCurrentSpecialist();
   });
 
   return button;
 }
 
-function serviceClient(clientID) {
+function handleClient(clientID) {
   let clientData = JSON.parse(window.localStorage.getItem(clientID));
   clientData.serviced = true;
+  clientData.endedAppointment = new Date();
 
   clientData = JSON.stringify(clientData);
   window.localStorage.setItem(clientID, clientData);
@@ -163,4 +165,15 @@ function addBoardHeader(client, specialist) {
   tr.appendChild(th2).append(specialist);
 
   document.querySelector("#clients").appendChild(tr);
+}
+
+
+function startAppointment(client) {
+  // let clientObj = JSON.parse(window.localStorage.getItem("1"));  
+  let clientObj = JSON.parse(window.localStorage.getItem(parseInt(client)));  
+  
+  if (!clientObj.startedAppointment) {
+    clientObj.startedAppointment = new Date();
+  }
+  window.localStorage.setItem(parseInt(client), JSON.stringify(clientObj));
 }
