@@ -1,63 +1,123 @@
-function write(msg, elem){
+function write(msg, elem) {
   document.querySelector(elem).innerHTML = msg;
 }
 
-function clear(elem){
-  document.querySelector(elem).innerHTML = '';
+function clear(elem) {
+  document.querySelector(elem).innerHTML = "";
 }
 
-function getClientData(id){
+function getClientData(id) {
   return JSON.parse(window.localStorage.getItem(id));
 }
 
 function successMsg(text) {
-    addMessage(text, 'alert-success')
+  addMessage(text, "alert-success");
 }
 
 function warningMsg(text) {
-    addMessage(text, 'alert-warning')
+  addMessage(text, "alert-warning");
 }
 
 function errorMsg(text) {
-    addMessage(text, 'alert-danger')
+  addMessage(text, "alert-danger");
 }
 
-function removeMsgs(){
-  clear('.alert-message');
+function removeMsgs() {
+  clear(".alert-message");
   document.querySelector(".alert").classList.add("scale-out");
 }
 
-function removeCards(){
+function removeCards() {
   document.querySelector(".card").classList.add("scale-out");
 }
 
-function addMessage(text, type){
-    const alert = document.querySelector(".alert");
-    const alertMessage = document.querySelector(".alert-message");
-    alert.classList.remove("alert-warning");
-    alert.classList.remove("alert-danger");
-    alert.classList.remove("alert-success");
-    alert.classList.add("scale-out");
-  
-    setTimeout(function(){
+function addMessage(text, type) {
+  const alert = document.querySelector(".alert");
+  const alertMessage = document.querySelector(".alert-message");
+  alert.classList.remove("alert-warning");
+  alert.classList.remove("alert-danger");
+  alert.classList.remove("alert-success");
+  alert.classList.add("scale-out");
+
+  setTimeout(function() {
     alertMessage.innerHTML = text;
     alert.classList.add(type);
     alert.classList.remove("scale-out");
-  
-    document.querySelector(".close-alert").addEventListener("click", function() {
-      alertMessage.innerHTML = "";
-      alert.classList.add("scale-out");
-    });
-  },50);
+
+    document
+      .querySelector(".close-alert")
+      .addEventListener("click", function() {
+        alertMessage.innerHTML = "";
+        alert.classList.add("scale-out");
+      });
+  }, 50);
 }
 
+/****************** Client Functions *********************/
 
+avgAppointmentTime(3);
+function avgAppointmentTime(specialistID) {
+  const allClientsObj = { ...localStorage };
+  const servicedClientsIDs = getSpecialistsServicedClients(specialistID);
+  let sum = 0;
+  let values = 0;
+
+  
+
+  servicedClientsIDs.forEach(id => {
+    const started = new Date(JSON.parse(allClientsObj[id]).startedAppointment);
+    const ended = new Date(JSON.parse(allClientsObj[id]).endedAppointment);
+
+    const timeDiffenrenceInMs = ended - started;
+    
+    sum += timeDiffenrenceInMs;
+    values++;
+  });
+
+
+
+  const avg = Math.floor(sum/values);
+  const avgInMins = millisToMinutesAndSeconds(avg);
+
+  return avgInMins;
+}
+
+function millisToMinutesAndSeconds(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  if (seconds < 1) {
+    seconds = 1;
+  }
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+}
+
+function getSpecialistsServicedClients(wantedSpecialist) {
+  const allClientsObj = { ...localStorage };
+  const allClientsIDs = Object.keys(allClientsObj);
+  const filteredClientsIDs = [];
+
+  allClientsIDs.forEach(clientID => {
+    const isClientServiced = JSON.parse(allClientsObj[clientID]).serviced;
+    // console.log(isClientServiced);
+
+    if (isClientServiced) {
+      const clientsSpecialist = JSON.parse(allClientsObj[clientID]).specialist;
+
+      if (clientsSpecialist == wantedSpecialist) {
+        filteredClientsIDs.push(clientID);
+      }
+    }
+  });
+
+  return filteredClientsIDs;
+}
+
+/****************** init Materialize JS ******************/
 
 document.addEventListener("DOMContentLoaded", function() {
   var elems = document.querySelectorAll(".sidenav");
   var instances = M.Sidenav.init(elems);
 });
-
 
 // function getClientsForSpecialist(wantedSpecialistID) {
 //   const allClientsObj = { ...localStorage };

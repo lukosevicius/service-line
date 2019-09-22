@@ -9,6 +9,7 @@ function addFilter() {
   clear('.specialists__select');
   const specialists = getUniqueSpecialists();
 
+  //Check if there any specialists
   if (specialists.length !== 0) {
     //Create 'Select' element, with options for each specialist
     let select = document.createElement("select");
@@ -61,7 +62,7 @@ function getUniqueSpecialists() {
   const clientsData = Object.values({ ...localStorage });
 
   allSpecialistArray = clientsData.map(el => {
-    return JSON.parse(el).specialist;
+    return parseInt(JSON.parse(el).specialist);
   });
 
   let uniqueSpecialists = Array.from(new Set(allSpecialistArray));
@@ -97,16 +98,16 @@ function createClientsTable(selectedSpecialist) {
   clear('#clients tbody');
   addBoardHeader("Laukiantys klientai", "Aptarnauti");
 
-  const clientsObj = { ...localStorage };
-  const clients = Object.keys(clientsObj);
+  const allClientsObj = { ...localStorage };
+  const clients = Object.keys(allClientsObj);
 
   let isFirstClient = true;
 
   clients.forEach(client => {
-    const isClientServiced = JSON.parse(clientsObj[client]).serviced;
+    const isClientServiced = JSON.parse(allClientsObj[client]).serviced;
 
     if (!isClientServiced) {
-      const clientsSpecialist = JSON.parse(clientsObj[client]).specialist;
+      const clientsSpecialist = JSON.parse(allClientsObj[client]).specialist;
 
       if (clientsSpecialist == selectedSpecialist) {
         addClientToBoard(client, selectedSpecialist, isFirstClient);

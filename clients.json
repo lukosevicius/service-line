@@ -1,38 +1,114 @@
 {
-    "1": {
-        "specialist": 1,
-        "serviced": false
-    },
-    "2": {
-        "specialist": 1,
-        "serviced": false
-    },
-    "3": {
-        "specialist": 2,
-        "serviced": false
-    },
-    "4": {
-        "specialist": 2,
-        "serviced": false
-    },
-    "5": {
-        "specialist": 3,
-        "serviced": false
-    },
-    "6": {
-        "specialist": 1,
-        "serviced": false
-    },
-    "7": {
-        "specialist": 3,
-        "serviced": false
-    },
-    "8": {
-        "specialist": 1,
-        "serviced": false
-    },
-    "9": {
-        "specialist": 2,
-        "serviced": false
-    }
+  "1": {
+    "specialist": 1,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "2": {
+    "specialist": 1,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "3": {
+    "specialist": 2,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "4": {
+    "specialist": 2,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "5": {
+    "specialist": 3,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "6": {
+    "specialist": 1,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "7": {
+    "specialist": 3,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "8": {
+    "specialist": 1,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "9": {
+    "specialist": 2,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "10": {
+    "specialist": 1,
+    "serviced": true,
+    "created": "2019-09-22T13:54:03.747Z",
+    "startedAppointment": "2019-09-22T13:55:07.747Z",
+    "endedAppointment": "2019-09-22T13:59:46.747Z"
+  },
+  "11": {
+    "specialist": 1,
+    "serviced": true,
+    "created": "2019-09-22T14:03:03.747Z",
+    "startedAppointment": "2019-09-22T14:56:01.747Z",
+    "endedAppointment": "2019-09-22T15:02:17.747Z"
+  },
+  "12": {
+    "specialist": 1,
+    "serviced": true,
+    "created": "2019-09-22T13:54:03.747Z",
+    "startedAppointment": "2019-09-22T16:01:03.747Z",
+    "endedAppointment": "2019-09-22T16:12:14.747Z"
+  },
+  "13": {
+    "specialist": 2,
+    "serviced": true,
+    "created": "2019-09-22T10:44:03.747Z",
+    "startedAppointment": "2019-09-22T10:49:01.747Z",
+    "endedAppointment": "2019-09-22T10:57:37.747Z"
+  },
+  "14": {
+    "specialist": 2,
+    "serviced": true,
+    "created": "2019-09-22T14:52:03.747Z",
+    "startedAppointment": "2019-09-22T15:01:43.747Z",
+    "endedAppointment": "2019-09-22T15:19:14.747Z"
+  },
+  "15": {
+    "specialist": 3,
+    "serviced": true,
+    "created": "2019-09-22T16:01:01.747Z",
+    "startedAppointment": "2019-09-22T16:02:04.747Z",
+    "endedAppointment": "2019-09-22T16:04:45.747Z"
+  },
+  "16": {
+    "specialist": 3,
+    "serviced": true,
+    "created": "2019-09-22T14:01:03.747Z",
+    "startedAppointment": "2019-09-22T14:07:13.747Z",
+    "endedAppointment": "2019-09-22T14:13:10.747Z"
+  }
 }

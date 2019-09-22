@@ -24,7 +24,7 @@ function loadBoard() {
 
     //Don't show more than 4 clients per specialist
     if(index < 4){
-      addClientToBoard(client, specialist, isFirst);
+      addClientToBoard(client, specialist, isFirst, index);
     }
 
     index++;
@@ -63,7 +63,7 @@ function getUnservicedClients() {
   return sortedClientsObj;
 }
 
-function addClientToBoard(client, specialist, isFirst) {
+function addClientToBoard(client, specialistID, isFirst, index) {
   const tr = document.createElement("tr");
   if (isFirst) {
     tr.classList.add("active-client");
@@ -73,7 +73,24 @@ function addClientToBoard(client, specialist, isFirst) {
   tr.appendChild(td1).append(client);
 
   const td2 = document.createElement("td");
-  tr.appendChild(td2).append(specialist);
+  tr.appendChild(td2).append(specialistID);
+
+  const td3 = document.createElement("td");
+  if(isFirst){
+    tr.appendChild(td3).append('-');
+  } else {
+    let avg = parseInt(avgAppointmentTime(specialistID));
+
+    if(!Number.isNaN(avg)){
+      avg = avg * index;
+      if(avg == 0) avg = 1;
+      avg += " min";
+    } else {
+      avg = "Nėra duomenų"
+    }
+    tr.appendChild(td3).append(avg);
+  }
+
 
   document.querySelector("#clients tbody").appendChild(tr);
 }

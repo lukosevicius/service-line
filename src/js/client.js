@@ -41,7 +41,7 @@ function howLong(clientData) {
   const started = new Date(clientData["startedAppointment"]);
   const ended = new Date(clientData["endedAppointment"]);
 
-  const timeDiffenrenceInMs = ended - started;
+  const timeDiffDiffenrenceInMs = ended - started;
 
   function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);

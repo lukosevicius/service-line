@@ -35,11 +35,19 @@ function getJSONfromFile(callback) {
     });
 }
 
-function loadClientsToStorage(clientsObj) {
-  const clients = Object.keys(clientsObj);
-  for (const client of clients) {
-    const specialistID = JSON.stringify(clientsObj[client].specialist);
-    saveClient(client, specialistID);
+function loadClientsToStorage(allClientsObj) {
+  const allClientsIDs = Object.keys(allClientsObj);
+
+  for (const clientID of allClientsIDs) {
+    const serviced = allClientsObj[clientID].serviced;
+    
+    if(serviced){
+      const clientsData = JSON.stringify(allClientsObj[clientID]);
+      saveServicedClient(clientID, clientsData);
+    } else {
+      const specialistID = JSON.stringify(allClientsObj[clientID].specialist);
+      saveClient(clientID, specialistID);
+    }
   }
   successMsg("Pavyzdiniai klientai sukelti į atmintį");
 }
@@ -65,6 +73,7 @@ function createClientID() {
 }
 
 function saveClient(clientID, specialistID) {
+
   //Start appoinment immediately if this is specialist's first client
   let appointment = null;
   if (!hasActiveClients(specialistID)) {
@@ -80,6 +89,10 @@ function saveClient(clientID, specialistID) {
   });
 
   //Add new client to Local storage
+  window.localStorage.setItem(clientID, clientData);
+}
+
+function saveServicedClient(clientID, clientData){
   window.localStorage.setItem(clientID, clientData);
 }
 
