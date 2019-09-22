@@ -1,0 +1,101 @@
+:-webkit-full-screen nav {
+    display: none;
+  }
+  
+  :-ms-fullscreen nav {
+    display: none;
+  }
+  
+  :fullscreen nav {
+    display: none;
+  }
+  
+  :-webkit-full-screen .go-fullscreen {
+    display: none;
+  }
+  
+  :-ms-fullscreen .go-fullscreen {
+    display: none;
+  }
+  
+  :fullscreen .go-fullscreen {
+    display: none;
+  }
+  
+  :-webkit-full-screen .container{
+      width: 100%!important;
+      max-width: initial;
+  }
+  
+  :-ms-fullscreen .container{
+      width: 100%!important;
+      max-width: initial;
+  }
+  
+  :fullscreen .container{
+      width: 100%!important;
+      max-width: initial;
+  }
+  
+  :-webkit-full-screen #clients{
+      margin-top: 0;
+  }
+  
+  :-ms-fullscreen #clients{
+      margin-top: 0;
+  }
+  
+  :fullscreen #clients{
+      margin-top: 0;
+  }
+  :-webkit-full-screen .board{
+      height: 100vh;
+      overflow: hidden;
+      /* font-size: 48px; */
+  }
+  :-ms-fullscreen .board{
+      height: 100vh;
+      overflow: hidden;
+      /* font-size: 48px; */
+  }
+  :fullscreen .board{
+      height: 100vh;
+      overflow: hidden;
+      /* font-size: 48px; */
+  }
+  
+  :-webkit-full-screen th,
+  :-webkit-full-screen td{
+      height: 7.692vh;
+  }
+  
+  :-ms-fullscreen th,
+  :-ms-fullscreen td{
+      height: 7.692vh;
+  }
+  
+  :fullscreen th,
+  :fullscreen td{
+      height: 7.692vh;
+  }
+  
+  :-webkit-full-screen .close-fullscreen{
+      display: block!important;
+      margin-top: 20px;
+      right: 1px;
+      bottom: 1px;
+  }
+  
+  :-ms-fullscreen .close-fullscreen{
+      display: block!important;
+      margin-top: 20px;
+      right: 1px;
+      bottom: 1px;
+  }
+  
+  :fullscreen .close-fullscreen{
+      display: block!important;
+      margin-top: 20px;
+      right: 1px;
+      bottom: 1px;
+  }

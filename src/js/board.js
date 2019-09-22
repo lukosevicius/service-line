@@ -4,24 +4,36 @@ function loadBoard() {
   const sortedClientsObj = getUnservicedClients();
   const sortedClients = Object.keys(sortedClientsObj);
 
-  if(sortedClients.length == 0){
-    write('Šiuo metu klientų nėra', '.board__message');
+  if (sortedClients.length == 0) {
+    write("Šiuo metu klientų nėra", ".board__message");
   }
 
   let isFirst = false;
   let currentSpecialist = 0;
 
+  let index = 0;
   for (const client of sortedClients) {
+
     const specialist = sortedClientsObj[client];
 
     if (currentSpecialist != specialist) {
       isFirst = true;
       currentSpecialist = specialist;
+      index = 0;
     }
 
-    addClientToBoard(client, specialist, isFirst);
+    //Don't show more than 4 clients per specialist
+    if(index < 4){
+      addClientToBoard(client, specialist, isFirst);
+    }
+
+    index++;
     isFirst = false;
   }
+
+  //enable fullscreen option
+  document.querySelector(".go-fullscreen").addEventListener("click", goFullscreen);
+  document.querySelector(".close-fullscreen").addEventListener("click", closeFullscreen);
 }
 
 function getUnservicedClients() {
@@ -66,20 +78,31 @@ function addClientToBoard(client, specialist, isFirst) {
   document.querySelector("#clients tbody").appendChild(tr);
 }
 
-// document.querySelector('.fullscreen').addEventListener('click', function(){
 
-  
-//   let elem = document.documentElement;
-//   function openFullscreen() {
-//     if (elem.requestFullscreen) {
-//       elem.requestFullscreen();
-//     } else if (elem.mozRequestFullScreen) { /* Firefox */
-//       elem.mozRequestFullScreen();
-//     } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-//       elem.webkitRequestFullscreen();
-//     } else if (elem.msRequestFullscreen) { /* IE/Edge */
-//       elem.msRequestFullscreen();
-//     }
-//   }
-//   openFullscreen();
-// })
+let elem = document.documentElement;
+function goFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
