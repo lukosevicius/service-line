@@ -108,7 +108,7 @@ function hasActiveClients(wantedSpecialistID) {
 
 function deleteAll(){
   window.localStorage.clear();
-  dangerMsg("Visi duomenys iš 'LocalStorage' atminties buvo ištrinti")
+  successMsg("Visi duomenys iš 'LocalStorage' atminties buvo ištrinti")
 }
 
 

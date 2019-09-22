@@ -6,7 +6,7 @@ function loadSpecialistpage() {
 }
 
 function addFilter() {
-  document.querySelector(".specialists__select").innerHTML = "";
+  clear('.specialists__select');
   const specialists = getUniqueSpecialists();
 
   if (specialists.length !== 0) {
@@ -87,14 +87,14 @@ function addClientsForCurrentSpecialist() {
         createClientsTable(selectedSpecialist);
       });
   } else {
-    document.querySelector("#clients thead").innerHTML = "";
-    document.querySelector("#clients tbody").innerHTML = "";
+    clear('#clients thead');
+    clear('#clients tbody');
   }
 }
 
 function createClientsTable(selectedSpecialist) {
-  document.querySelector("#clients thead").innerHTML = "";
-  document.querySelector("#clients tbody").innerHTML = "";
+  clear('#clients thead');
+  clear('#clients tbody');
   addBoardHeader("Laukiantys klientai", "Aptarnauti");
 
   const clientsObj = { ...localStorage };
@@ -155,7 +155,7 @@ function createHandleClientButton(client) {
 }
 
 function handleClient(clientID) {
-  let clientData = JSON.parse(window.localStorage.getItem(clientID));
+  let clientData = getClientData(clientID);
   clientData.serviced = true;
   clientData.endedAppointment = new Date();
 
@@ -179,14 +179,13 @@ function addBoardHeader(client, specialist) {
 }
 
 
-function startAppointment(client) {
-  // let clientObj = JSON.parse(window.localStorage.getItem("1"));  
-  let clientObj = JSON.parse(window.localStorage.getItem(parseInt(client)));  
+function startAppointment(clientID) {
+  let clientData = getClientData(parseInt(clientID));  
   
-  if (!clientObj.startedAppointment) {
-    clientObj.startedAppointment = new Date();
+  if (!clientData.startedAppointment) {
+    clientData.startedAppointment = new Date();
   }
-  window.localStorage.setItem(parseInt(client), JSON.stringify(clientObj));
+  window.localStorage.setItem(parseInt(clientID), JSON.stringify(clientData));
 }
 
 document.addEventListener('DOMContentLoaded', function() {

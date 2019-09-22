@@ -4,6 +4,10 @@ function loadBoard() {
   const sortedClientsObj = getUnservicedClients();
   const sortedClients = Object.keys(sortedClientsObj);
 
+  if(sortedClients.length == 0){
+    write('Šiuo metu klientų nėra', '.board__message');
+  }
+
   let isFirst = false;
   let currentSpecialist = 0;
 
@@ -14,7 +18,6 @@ function loadBoard() {
       isFirst = true;
       currentSpecialist = specialist;
     }
-    // console.log(window.localStorage.getItem(1));
 
     addClientToBoard(client, specialist, isFirst);
     isFirst = false;

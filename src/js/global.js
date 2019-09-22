@@ -1,3 +1,15 @@
+function write(msg, elem){
+  document.querySelector(elem).innerHTML = msg;
+}
+
+function clear(elem){
+  document.querySelector(elem).innerHTML = '';
+}
+
+function getClientData(id){
+  return JSON.parse(window.localStorage.getItem(id));
+}
+
 function successMsg(text) {
     addMessage(text, 'alert-success')
 }
@@ -11,7 +23,7 @@ function dangerMsg(text) {
 }
 
 function removeMsgs(){
-  document.querySelector(".alert-message").innerHTML = "";
+  clear('.alert-message');
   document.querySelector(".alert").classList.add("scale-out");
 }
 
@@ -38,6 +50,8 @@ function addMessage(text, type){
     });
   },50);
 }
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
   var elems = document.querySelectorAll(".sidenav");

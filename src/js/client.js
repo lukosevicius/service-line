@@ -5,13 +5,13 @@ function setEventListeners() {
 }
 
 function login() {
-  const enteredClientID = document.querySelector(".enter-client-code").value;
+  const enteredID = document.querySelector(".enter-client-code").value;
 
-  if (enteredClientID) {
-    const clientData = JSON.parse(window.localStorage.getItem(enteredClientID));
+  if (enteredID) {
+    const clientData = getClientData(enteredID);
     if (clientData) {
       removeMsgs();
-      showInfo(enteredClientID, clientData);
+      showInfoCard(enteredID, clientData);
     } else {
       removeCards();
       dangerMsg("Tokio vartotojo nėra");
@@ -22,36 +22,46 @@ function login() {
   }
 }
 
-function showInfo(client, clientData) {
-  document.querySelector(".client-code").innerHTML = "Kliento kodas: " + client;
+function showInfoCard(client, clientData) {
+  write("Kliento kodas: " + client, ".client-code");
 
-  const status = clientData["serviced"] ? "aptarnauta" : "laukia aptarnavimo";
-  document.querySelector(".client-status").innerHTML =
-    `<span>Kliento statusas: </span>` + status;
+  let status = clientData["serviced"] ? "aptarnauta" : "laukia aptarnavimo";
+  status = `<span>Kliento statusas: </span>` + status;
+  write(status, ".client-status");
 
   if (clientData["serviced"]) {
-    const started = new Date(clientData["startedAppointment"]);
-    const ended = new Date(clientData["endedAppointment"]);
-
-    const timeDiffenrenceInMs = ended - started;
-
-    function millisToMinutesAndSeconds(millis) {
-      var minutes = Math.floor(millis / 60000);
-      var seconds = ((millis % 60000) / 1000).toFixed(0);
-      if(seconds < 1){
-          seconds = 1;
-      }
-      return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-    }
-
-    const diff = millisToMinutesAndSeconds(timeDiffenrenceInMs);
-
-    document.querySelector(".client-appointment-time").innerHTML =
-      `<span>Apsilankymas pas specialistą truko: </span>` + diff + " (min:sek)";
+    appointment = howLong(clientData);
+    write(appointment, ".client-appointment-time");
   }
-  
-  document.querySelector('.card').classList.add('scale-out');
-  setTimeout(function(){
-    document.querySelector('.card').classList.remove('scale-out');
+
+  displayCard();
+}
+
+function howLong(clientData) {
+  const started = new Date(clientData["startedAppointment"]);
+  const ended = new Date(clientData["endedAppointment"]);
+
+  const timeDiffenrenceInMs = ended - started;
+
+  function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    if (seconds < 1) {
+      seconds = 1;
+    }
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  }
+
+  const diff = millisToMinutesAndSeconds(timeDiffenrenceInMs);
+  const appointment =
+    `<span>Apsilankymas pas specialistą truko: </span>` + diff + " (min:sek)";
+
+  return appointment;
+}
+
+function displayCard() {
+  document.querySelector(".card").classList.add("scale-out");
+  setTimeout(function() {
+    document.querySelector(".card").classList.remove("scale-out");
   }, 50);
 }
