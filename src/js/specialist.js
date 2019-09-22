@@ -6,7 +6,7 @@ function loadSpecialistpage() {
 }
 
 function addFilter() {
-  document.querySelector(".specialists").innerHTML = "";
+  document.querySelector(".specialists__select").innerHTML = "";
   const specialists = getUniqueSpecialists();
 
   if (specialists.length !== 0) {
@@ -21,10 +21,10 @@ function addFilter() {
       select.appendChild(option);
     });
 
-    document.querySelector(".specialists").appendChild(select);
+    document.querySelector(".specialists__select").appendChild(select);
   } else {
     document
-      .querySelector(".specialists")
+      .querySelector(".specialists__select")
       .append("Šiuo metu nėra eilėje laukiančių klientų");
   }
 }

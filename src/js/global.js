@@ -11,7 +11,7 @@ function dangerMsg(text) {
 }
 
 function removeMsgs(){
-  document.querySelector(".alert__message").innerHTML = "";
+  document.querySelector(".alert-message").innerHTML = "";
   document.querySelector(".alert").classList.add("scale-out");
 }
 
@@ -21,7 +21,7 @@ function removeCards(){
 
 function addMessage(text, type){
     const alert = document.querySelector(".alert");
-    const alertMessage = document.querySelector(".alert__message");
+    const alertMessage = document.querySelector(".alert-message");
     alert.classList.remove("alert-warning");
     alert.classList.remove("alert-danger");
     alert.classList.remove("alert-success");
