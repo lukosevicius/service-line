@@ -7,6 +7,9 @@ function addEventListeners() {
   document
     .querySelector(".add-client-btn")
     .addEventListener("click", addNewClient);
+  document
+    .querySelector(".delete-btn")
+    .addEventListener("click", deleteAll);
 }
 
 function loadExamplaryJSON() {
@@ -35,9 +38,7 @@ function loadClientsToStorage(clientsObj) {
     const specialistID = JSON.stringify(clientsObj[client].specialist);
     saveClient(client, specialistID);
   }
-
-  document.querySelector(".message").innerHTML =
-    "Pavyzdiniai klientai sukelti į LocalStorage atmintį";
+  successMsg("Pavyzdiniai klientai sukelti į atmintį");
 }
 
 function addNewClient() {
@@ -46,6 +47,7 @@ function addNewClient() {
   const clientID = createClientID();
 
   saveClient(clientID, specialistID);
+  successMsg("Užregistruota sėkmingai");
 }
 
 function createClientID() {
@@ -104,19 +106,13 @@ function hasActiveClients(wantedSpecialistID) {
   // return pickedClients;
 }
 
-// function getClientsForSpecialist(wantedSpecialistID) {
-//   const allClientsObj = { ...localStorage };
-//   const allClientsIDs = Object.keys(allClientsObj);
+function deleteAll(){
+  window.localStorage.clear();
+  dangerMsg("Visi duomenys iš 'LocalStorage' atminties buvo ištrinti")
+}
 
-//   const pickedClients = [];
 
-//   allClientsIDs.forEach(client => {
-//     const clientsData = JSON.parse(allClientsObj[client]);
 
-//     if (clientsData["specialist"] == wantedSpecialistID) {
-//       pickedClients.push(client);
-//     }
-//   });
 
-//   return pickedClients;
-// }
+
+

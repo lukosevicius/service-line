@@ -1,0 +1,16 @@
+.admin-page .client-buttons .add-client-btn {
+  width: 100% !important;
+  height: 200px;
+}
+
+@media (max-width: 992px){
+    .delete-btn {
+      margin-top: 20px;
+    }
+}
+
+  .load-btn,
+  .delete-btn {
+    width: 100%;
+  }
+

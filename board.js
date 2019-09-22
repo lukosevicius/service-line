@@ -60,6 +60,23 @@ function addClientToBoard(client, specialist, isFirst) {
   const td2 = document.createElement("td");
   tr.appendChild(td2).append(specialist);
 
-  document.querySelector("#clients").appendChild(tr);
+  document.querySelector("#clients tbody").appendChild(tr);
 }
 
+// document.querySelector('.fullscreen').addEventListener('click', function(){
+
+  
+//   let elem = document.documentElement;
+//   function openFullscreen() {
+//     if (elem.requestFullscreen) {
+//       elem.requestFullscreen();
+//     } else if (elem.mozRequestFullScreen) { /* Firefox */
+//       elem.mozRequestFullScreen();
+//     } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+//       elem.webkitRequestFullscreen();
+//     } else if (elem.msRequestFullscreen) { /* IE/Edge */
+//       elem.msRequestFullscreen();
+//     }
+//   }
+//   openFullscreen();
+// })

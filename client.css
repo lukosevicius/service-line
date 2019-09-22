@@ -1,0 +1,13 @@
+.card span {
+  font-weight: bold;
+}
+
+.client-page .alert {
+  width: 100%;
+  top: 20px;
+  left: 0;
+}
+
+.check-client-btn {
+  margin-top: 5px;
+}

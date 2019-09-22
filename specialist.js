@@ -87,12 +87,14 @@ function addClientsForCurrentSpecialist() {
         createClientsTable(selectedSpecialist);
       });
   } else {
-    document.querySelector("#clients").innerHTML = "";
+    document.querySelector("#clients thead").innerHTML = "";
+    document.querySelector("#clients tbody").innerHTML = "";
   }
 }
 
 function createClientsTable(selectedSpecialist) {
-  document.querySelector("#clients").innerHTML = "";
+  document.querySelector("#clients thead").innerHTML = "";
+  document.querySelector("#clients tbody").innerHTML = "";
   addBoardHeader("Laukiantys klientai", "Aptarnauti");
 
   const clientsObj = { ...localStorage };
@@ -127,13 +129,18 @@ function addClientToBoard(client, specialist, isFirstClient) {
   }
   tr.appendChild(td2);
 
-  document.querySelector("#clients").appendChild(tr);
+  document.querySelector("#clients tbody").appendChild(tr);
 }
 
 function createHandleClientButton(client) {
   const button = document.createElement("button");
 
-  button.append("Aptarnauti");
+  const i = document.createElement('i');
+  i.classList.add('material-icons');
+  i.append('check');
+
+  button.appendChild(i); 
+  // button.append("Aptarnauta");
   button.setAttribute("data-client", client);
   button.classList.add("btn");
   button.classList.add("delete-button");
@@ -157,6 +164,7 @@ function handleClient(clientID) {
 }
 
 function addBoardHeader(client, specialist) {
+  const thead = document.createElement("tr");
   const tr = document.createElement("tr");
   const th1 = document.createElement("th");
   tr.appendChild(th1).append(client);
@@ -164,7 +172,10 @@ function addBoardHeader(client, specialist) {
   const th2 = document.createElement("th");
   tr.appendChild(th2).append(specialist);
 
-  document.querySelector("#clients").appendChild(tr);
+  tr.classList.add('light-blue');
+  tr.classList.add('lighten-1');
+
+  document.querySelector("#clients thead").appendChild(tr);
 }
 
 
@@ -177,3 +188,8 @@ function startAppointment(client) {
   }
   window.localStorage.setItem(parseInt(client), JSON.stringify(clientObj));
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems);
+});

@@ -10,13 +10,15 @@ function login() {
   if (enteredClientID) {
     const clientData = JSON.parse(window.localStorage.getItem(enteredClientID));
     if (clientData) {
-      document.querySelector(".message").innerHTML = "Prisijungta sėkmingai";
+      removeMsgs();
       showInfo(enteredClientID, clientData);
     } else {
-      document.querySelector(".message").innerHTML = "Tokio vartotojo nėra";
+      removeCards();
+      dangerMsg("Tokio vartotojo nėra");
     }
   } else {
-    document.querySelector(".message").innerHTML = "Kliento kodas neįvestas";
+    removeCards();
+    warningMsg("Kliento kodas neįvestas");
   }
 }
 
@@ -25,7 +27,7 @@ function showInfo(client, clientData) {
 
   const status = clientData["serviced"] ? "aptarnauta" : "laukia aptarnavimo";
   document.querySelector(".client-status").innerHTML =
-    "Kliento statusas: " + status;
+    `<span>Kliento statusas: </span>` + status;
 
   if (clientData["serviced"]) {
     const started = new Date(clientData["startedAppointment"]);
@@ -45,6 +47,11 @@ function showInfo(client, clientData) {
     const diff = millisToMinutesAndSeconds(timeDiffenrenceInMs);
 
     document.querySelector(".client-appointment-time").innerHTML =
-      "Apsilankymas pas specialistą truko: " + diff + " (min:sek)";
+      `<span>Apsilankymas pas specialistą truko: </span>` + diff + " (min:sek)";
   }
+  
+  document.querySelector('.card').classList.add('scale-out');
+  setTimeout(function(){
+    document.querySelector('.card').classList.remove('scale-out');
+  }, 50);
 }
