@@ -1,6 +1,6 @@
-addEventListeners();
+init();
 
-function addEventListeners() {
+function init() {
   document
     .querySelector(".load-btn")
     .addEventListener("click", loadExamplaryJSON);
@@ -8,6 +8,8 @@ function addEventListeners() {
     .querySelector(".add-client-btn")
     .addEventListener("click", addNewClient);
   document.querySelector(".delete-btn").addEventListener("click", deleteAll);
+
+  document.querySelector(".add-client-btn").focus();
 }
 
 function loadExamplaryJSON() {
