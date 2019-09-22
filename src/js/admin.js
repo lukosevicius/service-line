@@ -7,29 +7,30 @@ function addEventListeners() {
   document
     .querySelector(".add-client-btn")
     .addEventListener("click", addNewClient);
-  document
-    .querySelector(".delete-btn")
-    .addEventListener("click", deleteAll);
+  document.querySelector(".delete-btn").addEventListener("click", deleteAll);
 }
 
 function loadExamplaryJSON() {
   getJSONfromFile(function(response) {
-    let clientsJSON = JSON.parse(response);
-
-    loadClientsToStorage(clientsJSON);
+    if (response) {
+      loadClientsToStorage(response);
+    } else {
+      errorMsg("Nepavyko nuskaityti lankytojų duomenų");
+    }
   });
 }
 
 function getJSONfromFile(callback) {
-  var xobj = new XMLHttpRequest();
-  xobj.overrideMimeType("application/json");
-  xobj.open("GET", "clients.json", true);
-  xobj.onreadystatechange = function() {
-    if (xobj.readyState == 4 && xobj.status == "200") {
-      callback(xobj.responseText);
-    }
-  };
-  xobj.send(null);
+  fetch("clients.json")
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      callback(data);
+    })
+    .catch(function() {
+      callback(false);
+    });
 }
 
 function loadClientsToStorage(clientsObj) {
@@ -106,13 +107,7 @@ function hasActiveClients(wantedSpecialistID) {
   // return pickedClients;
 }
 
-function deleteAll(){
+function deleteAll() {
   window.localStorage.clear();
-  successMsg("Visi duomenys iš 'LocalStorage' atminties buvo ištrinti")
+  successMsg("Visi duomenys ištrinti");
 }
-
-
-
-
-
-

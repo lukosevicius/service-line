@@ -18,7 +18,7 @@ function warningMsg(text) {
     addMessage(text, 'alert-warning')
 }
 
-function dangerMsg(text) {
+function errorMsg(text) {
     addMessage(text, 'alert-danger')
 }
 

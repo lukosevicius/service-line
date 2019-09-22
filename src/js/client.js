@@ -14,7 +14,7 @@ function login() {
       showInfoCard(enteredID, clientData);
     } else {
       removeCards();
-      dangerMsg("Tokio vartotojo nėra");
+      errorMsg("Tokio vartotojo nėra");
     }
   } else {
     removeCards();
