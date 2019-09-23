@@ -121,8 +121,12 @@ function howLongToWait(clientID, specialistID) {
     toWait = "";
   } else {
     avg = avg * index;
-    avgInMins = millisToMinutesAndSeconds(avg);
-    toWait = `<span>Laukti liko maždaug: </span>` + avgInMins + " (min:sek)";
+    if (!Number.isNaN(avg)) {
+      avgInMins = millisToMinutesAndSeconds(avg);
+      toWait = `<span>Laukti liko maždaug: </span>` + avgInMins + " (min:sek)";
+    } else {
+      toWait = `<span>Laukti liko maždaug: </span> Nėra duomenų sudaryti laukimo vidurkiui`;
+    }
   }
 
   return toWait;
