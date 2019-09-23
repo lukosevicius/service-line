@@ -1,7 +1,8 @@
-setEventListeners();
+init();
 
-function setEventListeners() {
+function init() {
   document.querySelector(".check-client-btn").addEventListener("click", login);
+  document.querySelector(".enter-client-code").focus();
 }
 
 function login() {
@@ -12,7 +13,7 @@ function login() {
     const clientData = getClientData(enteredID);
     if (clientData) {
       removeMsgs();
-      showInfoCard(enteredID, clientData);
+      showInfoCard(enteredID);
     } else {
       removeCards();
       errorMsg("Tokio vartotojo nėra");
@@ -23,22 +24,83 @@ function login() {
   }
 }
 
-function showInfoCard(clientID, clientData) {
-  clear(".client-appointment-time");
-  write("Kliento kodas: " + clientID, ".client-code");
+function showInfoCard(clientID) {
+  clearInterval(window.myInterval);
+  const clientData = getClientData(clientID);
+  clear(".client__info__appointment-time");
 
-  let status = clientData["serviced"] ? "aptarnauta" : "laukia aptarnavimo";
-  status = `<span>Kliento statusas: </span>` + status;
-  write(status, ".client-status");
+  //Name
+  write(clientData["name"], ".client__info__name");
+  //ID
+  write(`<span>Kliento kodas: </span>` + clientID, ".client__info__code");
+  //Status
+  write(clientStatus(clientID, clientData), ".client__info__status");
 
-  write(howLong(clientID), ".client-appointment-time");
+  if (isActive(clientID)) {
+    //Position in Line
+    write(inLine(clientID), ".client__info__line-position");
+    //How long to wait/ How long appointment took
+    write(howLong(clientID), ".client__info__appointment-time");
+    //Check "How long to wait" every 5 seconds
+    window.myInterval = setInterval(function() {
+      write(howLong(clientID), ".client__info__appointment-time");
+    }, 5000);
+  } else {
+    clear(".client__info__line-position");
+    clear(".client__info__appointment-time");
+  }
 
-  //Check time every 5 seconds
-  window.myInterval = setInterval(function() {
-    write(howLong(clientID), ".client-appointment-time");
-  }, 5000);
-
+  addCancelButton(clientID);
   displayCard();
+}
+
+function clientStatus(clientID, clientData) {
+  let status;
+  if (clientData["serviced"]) {
+    status = `<span class="green-txt">Aptarnauta</span>`;
+  } else {
+    status = "Laukia aptarnavimo";
+    if (positionInLine(clientID) == 0) {
+      status = "Pas specialistą";
+    }
+    if (clientData["canceled"]) {
+      status = `<span class="red-txt">Atšaukta</span>`;
+    }
+  }
+
+  return `<span>Kliento statusas: </span>` + status;
+}
+
+function addCancelButton(clientID) {
+  document.querySelector(".client__info__cancel").innerHTML = "";
+  const button = document.createElement("button");
+  button.classList.add("btn");
+  button.classList.add("cancel-btn");
+  button.append("Atšaukti");
+
+  if (isActive(clientID) && positionInLine(clientID) != 0) {
+    button.classList.add("orange");
+    button.addEventListener("click", function() {
+      updateClient(clientID, "canceled", true);
+      showInfoCard(clientID);
+    });
+  } else {
+    button.classList.add("disabled");
+  }
+
+  document.querySelector(".client__info__cancel").appendChild(button);
+}
+
+function inLine(clientID) {
+  const pos = positionInLine(clientID);
+
+  if (pos < 1) {
+    return "";
+  } else if (pos == 1) {
+    return `<span>Eilėje esate pirmas</span>`;
+  } else {
+    return `<span>Kiek klientų prieš jus laukia eilėje: </span>` + (pos - 1);
+  }
 }
 
 function howLong(clientID) {
@@ -56,7 +118,7 @@ function howLongToWait(clientID, specialistID) {
   let toWait;
 
   if (index == 0) {
-    toWait = `<span>Klientas šiuo metu yra pas specialistą</span>`;
+    toWait = "";
   } else {
     avg = avg * index;
     avgInMins = millisToMinutesAndSeconds(avg);

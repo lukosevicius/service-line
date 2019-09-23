@@ -9,7 +9,7 @@ function init() {
     .addEventListener("click", addNewClient);
   document.querySelector(".delete-btn").addEventListener("click", deleteAll);
 
-  document.querySelector(".add-client-btn").focus();
+  document.querySelector(".admin__options__enter input").focus();
 }
 
 function loadExamplaryJSON() {
@@ -30,7 +30,7 @@ function getJSONfromFile(callback) {
     .then(data => {
       callback(data);
     })
-    .catch(function() {
+    .catch(function(error) {
       callback(false);
     });
 }
@@ -40,25 +40,66 @@ function loadClientsToStorage(allClientsObj) {
 
   for (const clientID of allClientsIDs) {
     const serviced = allClientsObj[clientID].serviced;
-    
-    if(serviced){
+
+    if (serviced) {
       const clientsData = JSON.stringify(allClientsObj[clientID]);
       saveServicedClient(clientID, clientsData);
     } else {
       const specialistID = JSON.stringify(allClientsObj[clientID].specialist);
-      saveClient(clientID, specialistID);
+      const name = allClientsObj[clientID].name;
+      saveClient(clientID, specialistID, name);
     }
   }
   successMsg("Pavyzdiniai klientai sukelti į atmintį");
 }
 
 function addNewClient() {
-  //Randomly assign client to one of 3 working specialists.
-  const specialistID = Math.floor(Math.random() * 3) + 1;
-  const clientID = createClientID();
+  const name = document.querySelector(".admin__options__enter input").value;
 
-  saveClient(clientID, specialistID);
-  successMsg("Užregistruota sėkmingai");
+  if (isEnteredCorrectly(name)) {
+    //Randomly assign client to one of 3 working specialists.
+    const specialistID = Math.floor(Math.random() * 3) + 1;
+    const clientID = createClientID();
+
+    saveClient(clientID, specialistID, name);
+    showClientCard(clientID, specialistID);
+    successMsg("Užregistruota sėkmingai");
+    document.querySelector(".enter-client-code").value = "";
+  } else {
+    errorMsg(
+      "Netesingai įvestas vardas. Galima naudoti tik didžiąsias ar mažąsias raides, bei tarpus"
+    );
+  }
+}
+
+function showClientCard(clientID, specialistID) {
+  addInfoToCard(clientID, specialistID);
+  displayCard();
+}
+
+function addInfoToCard(clientID, specialistID) {
+  const inputValue = document.querySelector(".admin__options__enter input")
+    .value;
+
+  // const clientData = getClien
+  document.querySelector(".admin__cards__name").innerHTML =
+    "Naujas klientas: " + inputValue;
+  document.querySelector(".admin__cards__num").innerHTML =
+    "Kliento kodas: " + clientID;
+  document.querySelector(".admin__cards__spec").innerHTML =
+    "Specialisto ID, kuris priims klieną: " + specialistID;
+}
+
+function isEnteredCorrectly(name) {
+  var regName = /^[a-žA-Ž ]+$/;
+  const inputValue = document.querySelector(".admin__options__enter input")
+    .value;
+
+  if (!regName.test(inputValue)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function createClientID() {
@@ -72,8 +113,7 @@ function createClientID() {
   }
 }
 
-function saveClient(clientID, specialistID) {
-
+function saveClient(clientID, specialistID, name) {
   //Start appoinment immediately if this is specialist's first client
   let appointment = null;
   if (!hasActiveClients(specialistID)) {
@@ -81,8 +121,10 @@ function saveClient(clientID, specialistID) {
   }
 
   const clientData = JSON.stringify({
+    name: name,
     specialist: specialistID,
     serviced: false,
+    canceled: false,
     created: new Date(),
     startedAppointment: appointment,
     endedAppointment: null
@@ -92,7 +134,7 @@ function saveClient(clientID, specialistID) {
   window.localStorage.setItem(clientID, clientData);
 }
 
-function saveServicedClient(clientID, clientData){
+function saveServicedClient(clientID, clientData) {
   window.localStorage.setItem(clientID, clientData);
 }
 
@@ -118,11 +160,16 @@ function hasActiveClients(wantedSpecialistID) {
   } else {
     return false;
   }
-
-  // return pickedClients;
 }
 
 function deleteAll() {
   window.localStorage.clear();
   successMsg("Visi duomenys ištrinti");
+}
+
+function displayCard() {
+  document.querySelector(".card").classList.add("scale-out");
+  setTimeout(function() {
+    document.querySelector(".card").classList.remove("scale-out");
+  }, 50);
 }

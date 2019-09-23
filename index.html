@@ -58,11 +58,18 @@
         <div class="admin__options">
           <div class="row">
             <div class="col s12">
+              <div class="admin__options__enter">
+                <h5>Įveskite naujo kliento vardą:</h5>
+                <input class="enter-client-code" type="text" />
+              </div>
+            </div>
+            <div class="col s12">
               <button class="btn-large waves-effect waves-light add-client-btn">
                 Registruoti naują klientą
               </button>
             </div>
           </div>
+
           <div class="row">
             <div class="col s12 l6">
               <button
@@ -71,15 +78,8 @@
                 Pavyzdniai klientai
               </button>
             </div>
-            <div class="col s12 l6">
-              <button class="btn-large waves-effect waves-light red delete-btn">
-                Ištrinti visus klientus
-              </button>
-            </div>
           </div>
         </div>
-
-        <br /><br /><br /><br />
 
         <div class="admin__notices">
           <div class="row">
@@ -92,6 +92,18 @@
             </div>
           </div>
         </div>
+
+        <div class="admin__cards">
+          <div class="admin__card card scale-transition scale-out">
+            <div class="card-content">
+              <span class="admin__cards__name card-title"></span>
+              <p class="admin__cards__num"></p>
+              <p class="admin__cards__spec"></p>
+            </div>
+          </div>
+        </div>
+
+        <br /><br /><br /><br />
       </div>
     </main>
 

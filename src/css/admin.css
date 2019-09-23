@@ -3,14 +3,29 @@
   height: 200px;
 }
 
-@media (max-width: 992px){
-    .delete-btn {
-      margin-top: 20px;
-    }
+@media (max-width: 992px) {
+  .delete-btn {
+    margin-top: 20px;
+  }
 }
 
-  .load-btn,
-  .delete-btn {
-    width: 100%;
-  }
+.load-btn,
+.delete-btn {
+  width: 100%;
+}
 
+.admin__options__enter {
+  margin-bottom: 20px;
+}
+
+.admin__options__enter input {
+  font-size: 24px !important;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.card .card-content .card-title{
+  text-transform: capitalize;
+}

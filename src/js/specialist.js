@@ -6,7 +6,7 @@ function loadSpecialistpage() {
 }
 
 function addFilter() {
-  clear('.specialists__select');
+  clear(".specialists__select");
   const specialists = getUniqueSpecialists();
 
   //Check if there any specialists
@@ -42,18 +42,15 @@ function addFilter() {
 //     }
 //   });
 
-
 //   //Get only specialists numbers
 //   allSpecialistArray = clientsData.map(client => {
 //     client = JSON.parse(client);
 
 //       return client.specialist;
 //   });
-  
 
 //   let uniqueSpecialists = Array.from(new Set(allSpecialistArray));
 //   uniqueSpecialists.sort((a, b) => a - b);
-
 
 //   return uniqueSpecialists;
 // }
@@ -88,29 +85,27 @@ function addClientsForCurrentSpecialist() {
         createClientsTable(selectedSpecialist);
       });
   } else {
-    clear('#clients thead');
-    clear('#clients tbody');
+    clear("#clients thead");
+    clear("#clients tbody");
   }
 }
 
 function createClientsTable(selectedSpecialist) {
-  clear('#clients thead');
-  clear('#clients tbody');
+  clear("#clients thead");
+  clear("#clients tbody");
   addBoardHeader("Laukiantys klientai", "Aptarnauti");
 
   const allClientsObj = { ...localStorage };
-  const clients = Object.keys(allClientsObj);
+  const clientsIDs = Object.keys(allClientsObj);
 
   let isFirstClient = true;
 
-  clients.forEach(client => {
-    const isClientServiced = JSON.parse(allClientsObj[client]).serviced;
-
-    if (!isClientServiced) {
-      const clientsSpecialist = JSON.parse(allClientsObj[client]).specialist;
+  clientsIDs.forEach(clientID => {
+    if (isActive(clientID)) {
+      const clientsSpecialist = JSON.parse(allClientsObj[clientID]).specialist;
 
       if (clientsSpecialist == selectedSpecialist) {
-        addClientToBoard(client, selectedSpecialist, isFirstClient);
+        addClientToBoard(clientID, selectedSpecialist, isFirstClient);
         isFirstClient = false;
       }
     }
@@ -136,11 +131,11 @@ function addClientToBoard(client, specialist, isFirstClient) {
 function createHandleClientButton(client) {
   const button = document.createElement("button");
 
-  const i = document.createElement('i');
-  i.classList.add('material-icons');
-  i.append('check');
+  const i = document.createElement("i");
+  i.classList.add("material-icons");
+  i.append("check");
 
-  button.appendChild(i); 
+  button.appendChild(i);
   // button.append("Aptarnauta");
   button.setAttribute("data-client", client);
   button.classList.add("btn");
@@ -173,23 +168,22 @@ function addBoardHeader(client, specialist) {
   const th2 = document.createElement("th");
   tr.appendChild(th2).append(specialist);
 
-  tr.classList.add('light-blue');
-  tr.classList.add('lighten-1');
+  tr.classList.add("light-blue");
+  tr.classList.add("lighten-1");
 
   document.querySelector("#clients thead").appendChild(tr);
 }
 
-
 function startAppointment(clientID) {
-  let clientData = getClientData(parseInt(clientID));  
-  
+  let clientData = getClientData(parseInt(clientID));
+
   if (!clientData.startedAppointment) {
     clientData.startedAppointment = new Date();
   }
   window.localStorage.setItem(parseInt(clientID), JSON.stringify(clientData));
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('select');
+document.addEventListener("DOMContentLoaded", function() {
+  var elems = document.querySelectorAll("select");
   var instances = M.FormSelect.init(elems);
 });

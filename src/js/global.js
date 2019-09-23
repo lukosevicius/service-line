@@ -116,9 +116,7 @@ function getSpecialistsClients(wantedSpecialist) {
   const filteredClientsIDs = [];
 
   allClientsIDs.forEach(clientID => {
-    const isClientServiced = JSON.parse(allClientsObj[clientID]).serviced;
-
-    if (!isClientServiced) {
+    if (isActive(clientID)) {
       const clientsSpecialist = JSON.parse(allClientsObj[clientID]).specialist;
 
       if (clientsSpecialist == wantedSpecialist) {
@@ -140,26 +138,27 @@ function positionInLine(clientID) {
   return index;
 }
 
+function updateClient(clientID, key, newValue) {
+  let ClientData = getClientData(clientID);
+  ClientData[key] = newValue;
+  ClientData = JSON.stringify(ClientData);
+
+  window.localStorage.setItem(clientID, ClientData);
+}
+
+function isActive(clientID) {
+  let ClientData = getClientData(clientID);
+
+  if (!ClientData["serviced"] && !ClientData["canceled"]) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /****************** init Materialize JS ******************/
 
 document.addEventListener("DOMContentLoaded", function() {
   var elems = document.querySelectorAll(".sidenav");
   var instances = M.Sidenav.init(elems);
 });
-
-// function getClientsForSpecialist(wantedSpecialistID) {
-//   const allClientsObj = { ...localStorage };
-//   const allClientsIDs = Object.keys(allClientsObj);
-
-//   const pickedClients = [];
-
-//   allClientsIDs.forEach(client => {
-//     const clientsData = JSON.parse(allClientsObj[client]);
-
-//     if (clientsData["specialist"] == wantedSpecialistID) {
-//       pickedClients.push(client);
-//     }
-//   });
-
-//   return pickedClients;
-// }

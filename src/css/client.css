@@ -11,3 +11,19 @@
 .check-client-btn {
   margin-top: 5px;
 }
+
+.cancel-btn {
+  margin-top: 10px;
+}
+
+.green-txt {
+  color: green;
+}
+
+.red-txt {
+  color: red;
+}
+
+.card .card-content .card-title {
+  text-transform: capitalize;
+}

@@ -1,7 +1,7 @@
 loadBoard();
 
 function loadBoard() {
-  const sortedClientsObj = getUnservicedClients();
+  const sortedClientsObj = getActiveClients();
   const sortedClients = Object.keys(sortedClientsObj);
 
   if (sortedClients.length == 0) {
@@ -39,16 +39,15 @@ function loadBoard() {
     .addEventListener("click", closeFullscreen);
 }
 
-function getUnservicedClients() {
-  const clientsObj = { ...localStorage };
-
-  var sortable = [];
+function getActiveClients() {
+  const allClientsObj = { ...localStorage };
+  let sortable = [];
 
   //Turn client object to array
-  for (var client in clientsObj) {
-    const clientObj = JSON.parse(clientsObj[client]);
-    if (!clientObj.serviced) {
-      sortable.push([client, clientObj.specialist]);
+  for (let clientID in allClientsObj) {
+    if (isActive(clientID)) {
+      const specialistID = JSON.parse(allClientsObj[clientID]).specialist;
+      sortable.push([clientID, specialistID]);
     }
   }
 
@@ -58,7 +57,7 @@ function getUnservicedClients() {
   });
 
   //Remake the object from sorted array
-  var sortedClientsObj = {};
+  let sortedClientsObj = {};
   sortable.forEach(function(item) {
     sortedClientsObj[item[0] + " "] = item[1];
   });
