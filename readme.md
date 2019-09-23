@@ -1,6 +1,6 @@
 # Queue management tool
 
-Simple solution to manage client queues.
+Simple solution to manage your clients.
 
 ## App's pages
 
