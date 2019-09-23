@@ -10,8 +10,8 @@ function loadBoard() {
 
   let isFirst = false;
   let currentSpecialist = 0;
-
   let index = 0;
+
   for (const client of sortedClients) {
 
     const specialist = sortedClientsObj[client];
@@ -84,6 +84,7 @@ function addClientToBoard(client, specialistID, isFirst, index) {
     if(!Number.isNaN(avg)){
       avg = avg * index;
       if(avg == 0) avg = 1;
+      avg = millisToMinutes(avg);
       avg += " min";
     } else {
       avg = "Nėra duomenų"

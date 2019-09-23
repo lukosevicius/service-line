@@ -55,31 +55,25 @@ function addMessage(text, type) {
 
 /****************** Client Functions *********************/
 
-avgAppointmentTime(3);
 function avgAppointmentTime(specialistID) {
   const allClientsObj = { ...localStorage };
   const servicedClientsIDs = getSpecialistsServicedClients(specialistID);
   let sum = 0;
   let values = 0;
 
-  
-
   servicedClientsIDs.forEach(id => {
     const started = new Date(JSON.parse(allClientsObj[id]).startedAppointment);
     const ended = new Date(JSON.parse(allClientsObj[id]).endedAppointment);
 
     const timeDiffenrenceInMs = ended - started;
-    
+
     sum += timeDiffenrenceInMs;
     values++;
   });
 
+  const avg = Math.floor(sum / values);
 
-
-  const avg = Math.floor(sum/values);
-  const avgInMins = millisToMinutesAndSeconds(avg);
-
-  return avgInMins;
+  return avg;
 }
 
 function millisToMinutesAndSeconds(millis) {
@@ -91,6 +85,11 @@ function millisToMinutesAndSeconds(millis) {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
 
+function millisToMinutes(millis) {
+  var minutes = Math.floor(millis / 60000);
+  return minutes;
+}
+
 function getSpecialistsServicedClients(wantedSpecialist) {
   const allClientsObj = { ...localStorage };
   const allClientsIDs = Object.keys(allClientsObj);
@@ -98,7 +97,6 @@ function getSpecialistsServicedClients(wantedSpecialist) {
 
   allClientsIDs.forEach(clientID => {
     const isClientServiced = JSON.parse(allClientsObj[clientID]).serviced;
-    // console.log(isClientServiced);
 
     if (isClientServiced) {
       const clientsSpecialist = JSON.parse(allClientsObj[clientID]).specialist;
@@ -110,6 +108,36 @@ function getSpecialistsServicedClients(wantedSpecialist) {
   });
 
   return filteredClientsIDs;
+}
+
+function getSpecialistsClients(wantedSpecialist) {
+  const allClientsObj = { ...localStorage };
+  const allClientsIDs = Object.keys(allClientsObj);
+  const filteredClientsIDs = [];
+
+  allClientsIDs.forEach(clientID => {
+    const isClientServiced = JSON.parse(allClientsObj[clientID]).serviced;
+
+    if (!isClientServiced) {
+      const clientsSpecialist = JSON.parse(allClientsObj[clientID]).specialist;
+
+      if (clientsSpecialist == wantedSpecialist) {
+        filteredClientsIDs.push(clientID);
+      }
+    }
+  });
+
+  return filteredClientsIDs;
+}
+
+function positionInLine(clientID) {
+  const clientsData = getClientData(clientID);
+  const specialistID = clientsData["specialist"];
+
+  const clients = getSpecialistsClients(specialistID);
+  const index = clients.indexOf(clientID.toString());
+
+  return index;
 }
 
 /****************** init Materialize JS ******************/

@@ -110,5 +110,33 @@
     "created": "2019-09-22T14:01:03.747Z",
     "startedAppointment": "2019-09-22T14:07:13.747Z",
     "endedAppointment": "2019-09-22T14:13:10.747Z"
+  },
+  "17": {
+    "specialist": 3,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "18": {
+    "specialist": 3,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "19": {
+    "specialist": 1,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
+  },
+  "20": {
+    "specialist": 2,
+    "serviced": false,
+    "created": null,
+    "startedAppointment": null,
+    "endedAppointment": null
   }
 }
