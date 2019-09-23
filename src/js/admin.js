@@ -83,7 +83,7 @@ function addInfoToCard(clientID, specialistID) {
 
   // const clientData = getClien
   document.querySelector(".admin__cards__name").innerHTML =
-    "Naujas klientas: " + inputValue;
+    `Naujas klientas: <span class="name">${inputValue}</span>`;
   document.querySelector(".admin__cards__num").innerHTML =
     "Kliento kodas: " + clientID;
   document.querySelector(".admin__cards__spec").innerHTML =
