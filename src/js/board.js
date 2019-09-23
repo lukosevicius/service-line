@@ -85,8 +85,8 @@ function addClientToBoard(client, specialistID, isFirst, index) {
 
     if (!Number.isNaN(avg)) {
       avg = avg * index;
-      if (avg == 0) avg = 1;
       avg = millisToMinutes(avg);
+      if (avg == 0) avg = 1;
       avg += " min";
     } else {
       avg = "Nėra duomenų";
