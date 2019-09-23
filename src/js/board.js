@@ -13,7 +13,6 @@ function loadBoard() {
   let index = 0;
 
   for (const client of sortedClients) {
-
     const specialist = sortedClientsObj[client];
 
     if (currentSpecialist != specialist) {
@@ -23,7 +22,7 @@ function loadBoard() {
     }
 
     //Don't show more than 4 clients per specialist
-    if(index < 4){
+    if (index < 4) {
       addClientToBoard(client, specialist, isFirst, index);
     }
 
@@ -32,8 +31,12 @@ function loadBoard() {
   }
 
   //enable fullscreen option
-  document.querySelector(".go-fullscreen").addEventListener("click", goFullscreen);
-  document.querySelector(".close-fullscreen").addEventListener("click", closeFullscreen);
+  document
+    .querySelector(".go-fullscreen")
+    .addEventListener("click", goFullscreen);
+  document
+    .querySelector(".close-fullscreen")
+    .addEventListener("click", closeFullscreen);
 }
 
 function getUnservicedClients() {
@@ -76,26 +79,24 @@ function addClientToBoard(client, specialistID, isFirst, index) {
   tr.appendChild(td2).append(specialistID);
 
   const td3 = document.createElement("td");
-  if(isFirst){
-    tr.appendChild(td3).append('-');
+  if (isFirst) {
+    tr.appendChild(td3).append("-");
   } else {
     let avg = parseInt(avgAppointmentTime(specialistID));
 
-    if(!Number.isNaN(avg)){
+    if (!Number.isNaN(avg)) {
       avg = avg * index;
-      if(avg == 0) avg = 1;
+      if (avg == 0) avg = 1;
       avg = millisToMinutes(avg);
       avg += " min";
     } else {
-      avg = "Nėra duomenų"
+      avg = "Nėra duomenų";
     }
     tr.appendChild(td3).append(avg);
   }
 
-
   document.querySelector("#clients tbody").appendChild(tr);
 }
-
 
 let elem = document.documentElement;
 function goFullscreen() {
