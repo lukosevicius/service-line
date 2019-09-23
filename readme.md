@@ -2,6 +2,8 @@
 
 Simple solution to manage your clients.
 
+https://lukosevicius.github.io/service-line/
+
 ## App's pages
 
 1. Administration - Register new client. Also ability to load 20 fake customers, to try out application.
