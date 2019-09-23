@@ -7,7 +7,6 @@ function init() {
   document
     .querySelector(".add-client-btn")
     .addEventListener("click", addNewClient);
-  document.querySelector(".delete-btn").addEventListener("click", deleteAll);
 
   document.querySelector(".admin__options__enter input").focus();
 }
